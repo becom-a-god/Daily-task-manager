@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width",
+                   "initial-scale=1.0">
+    <meta name="description"
+          content="My Task Manager">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static' , filename='index.css') }}?v=1.2">
+</head>
+<body>
+    <header>
+        <h1 id="heading">ORGANIZE</h1>
+        <p id="heading2">Your Personal Task Manager</p>
+        <div id="task-count">
+            <div class="task-card">
+                <h3 class="total">total task</h3>
+                <p class="total-number">{{ total_task }}</p>
+            </div>
+            <div class="completed-card">
+                <h3 class="total">completed task</h3>
+                <p class="total-number">{{ completed_task }}</p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <form id="search" ction="{{ url_for('home_page') }}" method="POST">
+            <i data-lucide="search" id="fill-icon"></i>
+            <input id="search-baar" type="search" name="search-bar" placeholder="search">
+        </form>
+        {% if tasks %}
+            {% for task in tasks %}
+                <div class="tasks-card">
+                    <div class="row">
+                        <h3 id="task-heading">{{ task[1] }}</h3>
+                        <form id="check" action="{{ url_for('home_page') }}" method="POST">
+                            <button type="submit" name="status" value="{{ task[0] }}" class="check-btn">
+                                {% if task[3] %}
+                                    <i data-lucide="circle-check-big" class="icon-done"></i>
+                                {% else %}
+                                    <i data-lucide="circle" class="icon-pending"></i>
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                    <div id="row2">
+                        <h3 id="h-task">Task: </h3>
+                        <p id="task">{{ task[2] }}</p>
+                    </div>
+                    <div class="row3">
+                        <span>{{ task[4] }}</span>
+                        <form action="{{ url_for('home_page') }}" method="POST">
+                            <button id="delete" type="submit" name="delete" value="{{ task[0] }}">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2 id="empty">No Task Yet</h2>
+            <p id="empty-p">Plan big. Start small.</p>
+        {% endif %}
+
+        {% if confirm_delete %}
+             <div class="model-overlay">
+                 <div class="confirm-box">
+                     <p>Do you want to delete it?</p>
+                     <form action="{{ url_for('home_page') }}" method="POST">
+                         <button id="submit1" name="no" value="no">No</button>
+                         <button id="submit2" name="yes" value="{{ delete_id }}">Yes</button>
+                     </form>
+                 </div>
+             </div>
+        {% endif %}
+    </main>
+    <footer>
+        <a href="{{ url_for('create_task') }}" class="btn">
+            <i id="plus" data-lucide="plus"></i>
+        </a>
+    </footer>
+    <script>lucide.createIcons();</script>
+
+</body>
+</html>
