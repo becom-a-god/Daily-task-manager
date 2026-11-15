@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0">
+    <meta name="robots"
+          content="no-index">
+    <meta name="description"
+          content="create task page">
+    <link rel="stylesheet" href="{{ url_for('static' , filename='create_task.css') }}?v=1.0">
+</head>
+<body>
+    <h1 id="heading">Create Your Task</h1>
+    <div>
+        <form action="{{ url_for('create_task') }}" method="POST">
+            <input id="title" type="text" name="title" placeholder="Title" required>
+            <textarea id="task" name="task" placeholder="Enter Task" required></textarea>
+            <button id="submit" type="submit">create</button>
+        </form>
+    </div>
+</body>
+</html>
